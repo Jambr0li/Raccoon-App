@@ -19,6 +19,8 @@ struct ContentView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .padding()
+                
+//                Probably put openai call in here
             } else {
                 Image(systemName: "camera.fill")
                     .imageScale(.large)
