@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-    
 func generatePromptFromImage(image: UIImage, apiKey: String, completion: @escaping (String?) -> Void) {
     // Convert UIImage to base64
     guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
@@ -16,7 +15,7 @@ func generatePromptFromImage(image: UIImage, apiKey: String, completion: @escapi
 
     let messages: [[String: Any]] = [
         ["role": "user", "content": [
-            ["type": "text", "text": "Describe this raccoon image so I can generate a wanted poster of it. Be as descriptive as possible and include any distinguishing features."],
+            ["type": "text", "text": "Describe this image so I can generate a wanted poster of it. Be as descriptive as possible and include any distinguishing details."],
             ["type": "image_url", "image_url": ["url": "data:image/jpeg;base64,\(base64)"]]
         ]]
     ]
@@ -25,7 +24,6 @@ func generatePromptFromImage(image: UIImage, apiKey: String, completion: @escapi
         "model": "gpt-4-turbo",
         "messages": messages
     ]
-
     var request = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
     request.httpMethod = "POST"
     request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -90,8 +88,8 @@ func generateWantedPosterImage(prompt: String, apiKey: String, completion: @esca
 func getWantedPoster(raccoonImage: UIImage, completion: @escaping (UIImage?) -> Void) {
     if let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String {
         generatePromptFromImage(image: raccoonImage, apiKey: apiKey) { description in guard let description else {return}
-            
-            let posterPrompt = "A wild west wanted poster of a raccoon with the following description: \(description). Style: sepia tone, vintage paper, bold 'WANTED' at the top."
+            print(description)
+            let posterPrompt = "Give me a wanted poster of a raccoon with the following description: \(description). Follow that description as closely as possible to get the best results. Style: sepia tone, vintage paper, bold 'WANTED' at the top. Do not provide any other text besides the 'WANTED' at the top."
             
             generateWantedPosterImage(prompt: posterPrompt, apiKey: apiKey) { image in DispatchQueue.main.async { completion(image) }}
         }
