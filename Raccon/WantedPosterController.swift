@@ -89,7 +89,6 @@ func generateWantedPosterImage(prompt: String, apiKey: String, completion: @esca
 
 func getWantedPoster(raccoonImage: UIImage, completion: @escaping (UIImage?) -> Void) {
     if let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String {
-        print("API key found: \(apiKey)")
         generatePromptFromImage(image: raccoonImage, apiKey: apiKey) { description in guard let description else {return}
             
             let posterPrompt = "A wild west wanted poster of a raccoon with the following description: \(description). Style: sepia tone, vintage paper, bold 'WANTED' at the top."
