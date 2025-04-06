@@ -16,7 +16,7 @@ func generatePromptFromImage(image: UIImage, apiKey: String, completion: @escapi
 
     let messages: [[String: Any]] = [
         ["role": "user", "content": [
-            ["type": "text", "text": "Describe this raccoon image so I can generate a wild west wanted poster of it."],
+            ["type": "text", "text": "Describe this raccoon image so I can generate a wanted poster of it. Be as descriptive as possible and include any distinguishing features."],
             ["type": "image_url", "image_url": ["url": "data:image/jpeg;base64,\(base64)"]]
         ]]
     ]
@@ -73,7 +73,6 @@ func generateWantedPosterImage(prompt: String, apiKey: String, completion: @esca
            let urlStr = dataArr.first?["url"] as? String,
            let imageURL = URL(string: urlStr) {
 
-            // Download the image
             URLSession.shared.dataTask(with: imageURL) { imgData, _, _ in
                 if let imgData = imgData, let image = UIImage(data: imgData) {
                     completion(image)
@@ -88,9 +87,10 @@ func generateWantedPosterImage(prompt: String, apiKey: String, completion: @esca
     }.resume()
 }
 
-func getWantedPoster(RaccoonImage: UIImage, completion: @escaping (UIImage?) -> Void) {
+func getWantedPoster(raccoonImage: UIImage, completion: @escaping (UIImage?) -> Void) {
     if let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String {
-        generatePromptFromImage(image: RaccoonImage, apiKey: apiKey) { description in guard let description else {return}
+        print("API key found: \(apiKey)")
+        generatePromptFromImage(image: raccoonImage, apiKey: apiKey) { description in guard let description else {return}
             
             let posterPrompt = "A wild west wanted poster of a raccoon with the following description: \(description). Style: sepia tone, vintage paper, bold 'WANTED' at the top."
             

@@ -10,7 +10,7 @@ import SwiftUI
 struct PosterGeneratingView: View {
     let raccoonImage: UIImage
     @Binding var appState: AppState
-    @State private var statusText = "Analyzing raccoon features..."
+    @State private var statusText = "Analyzing raccoon image..."
     
     
     var body: some View {
@@ -24,7 +24,7 @@ struct PosterGeneratingView: View {
                 .scaledToFit()
                 .frame(maxHeight: 300)
 
-            Text("Creating your wild west wanted poster...")
+            Text("Creating your wanted poster...")
                 .multilineTextAlignment(.center)
                 .padding()
         }
@@ -34,7 +34,7 @@ struct PosterGeneratingView: View {
     }
     
     private func generateWantedPoster() {
-        getWantedPoster(RaccoonImage: raccoonImage) { posterImage in
+        getWantedPoster(raccoonImage: raccoonImage) { posterImage in
             if let posterImage = posterImage {
                 appState = .posterReady(poster: posterImage)
             } else {
