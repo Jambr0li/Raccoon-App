@@ -10,7 +10,7 @@ import SwiftUI
 struct PosterGeneratingView: View {
     let raccoonImage: UIImage
     @Binding var appState: AppState
-    @State private var statusText = "Analyzing raccoon image..."
+    @State private var statusText = "Analyzing image..."
     
     
     var body: some View {

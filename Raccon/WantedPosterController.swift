@@ -15,7 +15,7 @@ func generatePromptFromImage(image: UIImage, apiKey: String, completion: @escapi
 
     let messages: [[String: Any]] = [
         ["role": "user", "content": [
-            ["type": "text", "text": "Describe this image so I can generate a wanted poster of it. Be as descriptive as possible and include any distinguishing details."],
+            ["type": "text", "text": "Describe this image while being as descriptive as possible and include any distinguishing details. Make sure to not leave any details out - I want you to be able to recreate the image exactly as it is. "],
             ["type": "image_url", "image_url": ["url": "data:image/jpeg;base64,\(base64)"]]
         ]]
     ]
@@ -89,7 +89,7 @@ func getWantedPoster(raccoonImage: UIImage, completion: @escaping (UIImage?) -> 
     if let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String {
         generatePromptFromImage(image: raccoonImage, apiKey: apiKey) { description in guard let description else {return}
             print(description)
-            let posterPrompt = "Give me a wanted poster of a raccoon with the following description: \(description). Follow that description as closely as possible to get the best results. Style: sepia tone, vintage paper, bold 'WANTED' at the top. Do not provide any other text besides the 'WANTED' at the top."
+            let posterPrompt = "Give me a wanted poster with an image that has the following description: \(description). Follow that description as closely as possible. Style: sepia tone, vintage paper, bold 'WANTED' at the top and 'REWARD of some amount' at the bottom. Do not provide any other text besides the 'WANTED' at the top and a 'REWARD'."
             
             generateWantedPosterImage(prompt: posterPrompt, apiKey: apiKey) { image in DispatchQueue.main.async { completion(image) }}
         }
