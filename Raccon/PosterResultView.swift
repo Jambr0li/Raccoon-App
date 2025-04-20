@@ -10,6 +10,7 @@ import SwiftUI
 struct PosterResultView: View {
     let posterImage: UIImage
     @Binding var appState: AppState
+    @State private var showingShareSheet = false
 
     var body: some View {
         VStack {
@@ -23,10 +24,40 @@ struct PosterResultView: View {
                 .padding()
 
             Button("Create Another") {
-                   appState = .takePhoto
+                appState = .takePhoto
             }
             .buttonStyle(.borderedProminent)
             .padding()
+
+            Button("Save Photo") {
+                UIImageWriteToSavedPhotosAlbum(posterImage, nil, nil, nil)
+                print("Saved poster image to photo library")
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+
+            Button("Share Photo") {
+                showingShareSheet = true
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+            .sheet(isPresented: $showingShareSheet) {
+                ActivityViewController(activityItems: [posterImage])
+            }
         }
     }
+}
+
+struct ActivityViewController: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    let applicationActivities: [UIActivity]? = nil
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(
+            activityItems: activityItems,
+            applicationActivities: applicationActivities
+        )
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
