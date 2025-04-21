@@ -8,7 +8,6 @@
 import SwiftUI
 import AVFoundation
 import Photos
-
 struct PhotoCaptureView: View {
     @Binding var appState: AppState
     @State private var image: UIImage?
@@ -27,41 +26,41 @@ struct PhotoCaptureView: View {
                 Button("Generate Wanted Poster") {
                     appState = .generatingPoster(image: image)
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(OrangeButtonStyle())
                 .padding()
                 
                 Button("Take Another Photo") {
                     sourceType = .camera
                     requestCameraAccess()
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(OrangeButtonStyle())
                 .padding()
                 
                 Button("Select Photo from Library") {
                     sourceType = .photoLibrary
                     requestPhotoLibraryAccess()
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(OrangeButtonStyle())
                 .padding()
             } else {
                 Image(systemName: "camera.fill")
                     .imageScale(.large)
                     .font(.system(size: 50))
-                    .foregroundStyle(.tint)
+                    .foregroundColor(.orange)
                     .padding()
                 
                 Button("Take Photo") {
                     sourceType = .camera
                     requestCameraAccess()
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(OrangeButtonStyle())
                 .padding()
                 
                 Button("Select Photo from Library") {
                     sourceType = .photoLibrary
                     requestPhotoLibraryAccess()
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(OrangeSecondaryButtonStyle())
                 .padding()
             }
         }

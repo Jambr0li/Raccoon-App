@@ -11,13 +11,16 @@ struct ContentView: View {
     @State private var appState: AppState = .takePhoto
     
     var body: some View {
-        switch appState {
-        case .takePhoto:
-            PhotoCaptureView(appState: $appState)
-        case .generatingPoster(let image):
-            PosterGeneratingView(raccoonImage: image, appState: $appState)
-        case .posterReady(let poster):
-            PosterResultView(posterImage: poster, appState: $appState)
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+            switch appState {
+            case .takePhoto:
+                PhotoCaptureView(appState: $appState)
+            case .generatingPoster(let image):
+                PosterGeneratingView(raccoonImage: image, appState: $appState)
+            case .posterReady(let poster):
+                PosterResultView(posterImage: poster, appState: $appState)
+            }
         }
     }
 }
