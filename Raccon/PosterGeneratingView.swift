@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct PosterGeneratingView: View {
     let raccoonImage: UIImage
     @Binding var appState: AppState
@@ -16,8 +15,9 @@ struct PosterGeneratingView: View {
     var body: some View {
         VStack(spacing: 20) {
             ProgressView(statusText)
-                .progressViewStyle(CircularProgressViewStyle())
+                .progressViewStyle(CircularProgressViewStyle(tint: .orange))
                 .padding()
+                .foregroundColor(.white)
 
             Image(uiImage: raccoonImage)
                 .resizable()
@@ -26,8 +26,10 @@ struct PosterGeneratingView: View {
 
             Text("Creating your wanted poster...")
                 .multilineTextAlignment(.center)
+                .foregroundColor(.white)
                 .padding()
         }
+        .darkBackground()
         .onAppear {
             generateWantedPoster()
         }

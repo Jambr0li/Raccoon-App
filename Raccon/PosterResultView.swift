@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct PosterResultView: View {
     let posterImage: UIImage
     @Binding var appState: AppState
@@ -16,6 +15,7 @@ struct PosterResultView: View {
         VStack {
             Text("Your Wanted Poster")
                 .font(.title)
+                .foregroundColor(.white)
                 .padding()
 
             Image(uiImage: posterImage)
@@ -26,25 +26,26 @@ struct PosterResultView: View {
             Button("Create Another") {
                 appState = .takePhoto
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(OrangeButtonStyle())
             .padding()
 
             Button("Save Photo") {
                 UIImageWriteToSavedPhotosAlbum(posterImage, nil, nil, nil)
                 print("Saved poster image to photo library")
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(OrangeButtonStyle())
             .padding()
 
             Button("Share Photo") {
                 showingShareSheet = true
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(OrangeButtonStyle())
             .padding()
             .sheet(isPresented: $showingShareSheet) {
                 ActivityViewController(activityItems: [posterImage])
             }
         }
+        .darkBackground()
     }
 }
 
